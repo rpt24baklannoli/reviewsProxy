@@ -1,11 +1,21 @@
 h1 {
 	color: orange;
 }
+.nav-bar {
+	padding-top: 20px;
+	max-width: 1600px;
+}
+.footer {
+	padding-top: 20px;
+	max-width: 1600px;
+}
 #wrapper {
+	padding-left: 100px;
+	padding-right: 80px;
 	width: 1600px;
 	display: grid;
-	grid-template-columns: 500px 500px 300px;
-	gap: 15px;
+	grid-template-columns: 450px 450px 400px;
+	gap: 25px;
 	grid-auto-rows: minmax(1000px, auto);
 }
 #image {
