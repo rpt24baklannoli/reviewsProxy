@@ -15,13 +15,13 @@ app.listen(port, () => {
 });
 
 app.get('/serviceBundles', (req, res) => {
-	// let images = axios.get('http://localhost:3006/items/1/bundle.js');
+	let images = axios.get('http://localhost:3006/items/1/bundle.js');
 	let shopping = axios.get('http://localhost:3004/items/1/bundle.js');
 	let reviews = axios.get('http://localhost:3002/items/1/bundle.js');
 	let seller = axios.get('http://localhost:3005/items/1/bundle.js');
 
 	// ****add images service bundle when ready to promise
-	Promise.all([shopping, reviews, seller])
+	Promise.all([images, shopping, reviews, seller])
 		.then((response) => {
 			let data = '';
 			response.forEach((resp) => {
@@ -31,6 +31,20 @@ app.get('/serviceBundles', (req, res) => {
 		})
 		.catch((err) => {
 			console.log(err);
+		});
+});
+
+// GET IMAGES DATA
+app.get('/item/:item_id/images', (req, res) => {
+	let item_id = req.params.item_id;
+	axios
+		.get(`http://localhost:3006/item/${item_id}/images`)
+		.then((response) => {
+			res.status(200).send(response.data);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status('404');
 		});
 });
 
