@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const axios = require('axios');
 const cors = require('cors');
 const app = express();
@@ -8,6 +9,7 @@ const shoppingIP = '18.222.223.190:3004';
 const reviewsIP = '54.151.123.24:3002';
 const sellerIP = '3.21.248.149:3005';
 
+app.use(compression());
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
