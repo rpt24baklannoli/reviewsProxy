@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const compression = require('compression');
 const axios = require('axios');
@@ -6,7 +7,7 @@ const app = express();
 const port = 3000;
 const imagesIP = '13.52.213.118:3006';
 const shoppingIP = '18.222.223.190:3004';
-const reviewsIP = '54.151.123.24:3002';
+const reviewsIP = 'localhost:3002';
 const sellerIP = '3.21.248.149:3005';
 
 app.use(compression());
@@ -21,13 +22,13 @@ app.listen(port, () => {
 });
 
 app.get('/serviceBundles', (req, res) => {
-	let images = axios.get(`http://${imagesIP}/items/1/bundle.js`);
-	let shopping = axios.get(`http://${shoppingIP}/items/1/bundle.js`);
+	//let images = axios.get(`http://${imagesIP}/items/1/bundle.js`);
+	//let shopping = axios.get(`http://${shoppingIP}/items/1/bundle.js`);
 	let reviews = axios.get(`http://${reviewsIP}/items/1/bundle.js`);
-	let seller = axios.get(`http://${sellerIP}/items/1/bundle.js`);
+	//let seller = axios.get(`http://${sellerIP}/items/1/bundle.js`);
 
 	// ****add images service bundle when ready to promise
-	Promise.all([images, shopping, reviews, seller])
+	Promise.all([/*images, shopping,*/ reviews /*seller*/])
 		.then((response) => {
 			let data = '';
 			response.forEach((resp) => {
@@ -73,6 +74,21 @@ app.get('/api/items/:itemId/reviews', (req, res) => {
 	let itemId = req.params.itemId;
 	axios
 		.get(`http://${reviewsIP}/api/items/${itemId}/reviews`)
+		.then((response) => {
+			res.status(200).send(response.data);
+		})
+		.catch((err) => {
+			//console.log(err);
+			res.status('404');
+		});
+});
+
+// POST REVIEWS DATA
+app.post(`/api/items/:itemId/reviews`, (req, res) => {
+  let itemId = req.params.itemId;
+	let review = req.body;
+	axios
+		.post(`http://${reviewsIP}/api/items/${itemId}/reviews`, review)
 		.then((response) => {
 			res.status(200).send(response.data);
 		})
