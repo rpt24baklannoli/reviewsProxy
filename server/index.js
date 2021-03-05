@@ -7,7 +7,7 @@ const app = express();
 const port = 3000;
 const imagesIP = '13.52.213.118:3006';
 const shoppingIP = '18.222.223.190:3004';
-const reviewsIP = 'localhost:3002';
+const reviewsIP = '54.176.185.40:3002';
 const sellerIP = '3.21.248.149:3005';
 
 app.use(compression());
