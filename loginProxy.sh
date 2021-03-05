@@ -1,0 +1,1 @@
+ssh -i "proxy.pem" ec2-user@ec2-54-67-56-143.us-west-1.compute.amazonaws.com
