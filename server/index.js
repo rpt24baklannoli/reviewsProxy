@@ -20,8 +20,6 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
-
-app.use('/items/:itemId', express.static('client'));
 /*
 function handleRender(req, res) {
 	const reactHtml = ReactDOMServer.renderToString(<Main />);
@@ -40,10 +38,6 @@ function handleRender(req, res) {
 app.use('/items/:itemId', handleRender);
 */
 
-app.listen(port, () => {
-	// eslint-disable-next-line no-console
-	console.log(`Listening at http://localhost:${port}`);
-});
 
 app.get('/serviceBundles', (req, res) => {
 	//let images = axios.get(`http://${imagesIP}/items/1/bundle.js`);
@@ -169,4 +163,10 @@ app.get('/item/images', (req, res) => {
 		.catch((err) => {
 			res.status('404');
 		});
+});
+
+app.use('/items/:itemId', express.static('client'));
+app.listen(port, () => {
+	// eslint-disable-next-line no-console
+	console.log(`Listening at http://localhost:${port}`);
 });
