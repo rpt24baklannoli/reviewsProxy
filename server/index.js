@@ -3,18 +3,42 @@ const express = require('express');
 const compression = require('compression');
 const axios = require('axios');
 const cors = require('cors');
+const NodeCache = require( "node-cache" );
+const myCache = new NodeCache({ stdTTL: 3600 });
+//import ReactDOMServer from "react-dom/server";
+
 const app = express();
 const port = 3000;
 const imagesIP = '13.52.213.118:3006';
 const shoppingIP = '18.222.223.190:3004';
 const reviewsIP = '54.176.185.40:3002';
+//const reviewsIP = 'localhost:3002';
 const sellerIP = '3.21.248.149:3005';
 
 app.use(compression());
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
+
+
 app.use('/items/:itemId', express.static('client'));
+/*
+function handleRender(req, res) {
+	const reactHtml = ReactDOMServer.renderToString(<Main />);
+	const htmlTemplate = `<!DOCTYPE html>
+<html>
+	<head>
+			<title>Universal React server bundle</title>
+	</head>
+	<body>
+			<div id="app">${reactHtml}</div>
+			<script src="public/client.bundle.js"></script>
+	</body>
+</html>`;
+	res.send(htmlTemplate);
+}
+app.use('/items/:itemId', handleRender);
+*/
 
 app.listen(port, () => {
 	// eslint-disable-next-line no-console
@@ -72,15 +96,28 @@ app.get('/shopping/items/:item_id', (req, res) => {
 // GET REVIEWS DATA
 app.get('/api/items/:itemId/reviews', (req, res) => {
 	let itemId = req.params.itemId;
-	axios
-		.get(`http://${reviewsIP}/api/items/${itemId}/reviews`)
-		.then((response) => {
-			res.status(200).send(response.data);
-		})
-		.catch((err) => {
-			//console.log(err);
-			res.status('404');
-		});
+	// get from cache. if not in cache send axios request
+	// key it itemId and the reviews are the value
+	let value = myCache.get(itemId);
+	if (value == undefined) {
+		axios
+			.get(`http://${reviewsIP}/api/items/${itemId}/reviews`)
+			.then((response) => {
+				// set in cache
+				myCache.set(itemId, response.data);
+				res.status(200).send(response.data);
+			})
+			.catch((err) => {
+				//console.log(err);
+				res.status('404');
+			});
+	} else {
+		res.status(200).send(value);
+	}
+});
+
+app.get('/stats', (req, res) => {
+	res.status(200).send(myCache.getStats());
 });
 
 // POST REVIEWS DATA

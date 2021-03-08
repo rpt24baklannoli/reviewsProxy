@@ -10,6 +10,10 @@
 </head>
 
 <body>
+  <!--
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  -->
   <img class="nav-bar" src="etsyNavBar.PNG">
   <div id="wrapper">
     <div id="images">
@@ -23,8 +27,16 @@
   </div>
   <img class="footer" src="etsy-footer.PNG">
   <script type="text/javascript" src='/serviceBundles'></script>
-  <!--<script type="text/javascript" src='http://localhost:3002/items/1/bundle.js'></script>-->
+  <!-- <script type="text/javascript" src='http://localhost:3002/items/1/bundle.js'></script> -->
 
+  <!--
+  <script>
+    ReactDOM.hydrate(
+      React.createElement(Main),
+      document.getElementById("reviews")
+    );
+  </script>
+-->
 </body>
 
 </html>
