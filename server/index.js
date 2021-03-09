@@ -9,7 +9,7 @@ const myCache = new NodeCache({ stdTTL: 3600 });
 
 const app = express();
 const port = 3000;
-//const imagesIP = '13.52.213.118:3006';
+const imagesIP = '3.101.55.156:3006';
 const shoppingIP = '13.52.16.25:3004';
 const reviewsIP = '54.176.185.40:3002';
 const sellerIP = '18.221.203.49:3005';
@@ -40,13 +40,13 @@ app.use('/items/:itemId', handleRender);
 
 
 app.get('/serviceBundles', (req, res) => {
-	//let images = axios.get(`http://${imagesIP}/items/1/bundle.js`);
+	let images = axios.get(`http://${imagesIP}/items/1/bundle.js`);
 	let shopping = axios.get(`http://${shoppingIP}/items/1/bundle.js`);
 	let reviews = axios.get(`http://${reviewsIP}/items/1/bundle.js`);
 	let seller = axios.get(`http://${sellerIP}/items/1/bundle.js`);
 
 	// ****add images service bundle when ready to promise
-	Promise.all([/*images,*/ shopping, reviews, seller])
+	Promise.all([images,shopping, reviews, seller])
 		.then((response) => {
 			let data = '';
 			response.forEach((resp) => {
