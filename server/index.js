@@ -60,10 +60,22 @@ app.get('/serviceBundles', (req, res) => {
 });
 
 // GET IMAGES DATA
-app.get('/item/:item_id/images', (req, res) => {
+// app.get('/item/:item_id/images', (req, res) => {
+// 	let item_id = req.params.item_id;
+// 	axios
+// 		.get(`http://${imagesIP}/item/${item_id}/images`)
+// 		.then((response) => {
+// 			res.status(200).send(response.data);
+// 		})
+// 		.catch((err) => {
+// 			console.log(err);
+// 			res.status('404');
+// 		});
+// });
+app.get('/items/:item_id/images', (req, res) => {
 	let item_id = req.params.item_id;
 	axios
-		.get(`http://${imagesIP}/item/${item_id}/images`)
+		.get(`http://${imagesIP}/items/${item_id}/images`)
 		.then((response) => {
 			res.status(200).send(response.data);
 		})
@@ -72,7 +84,6 @@ app.get('/item/:item_id/images', (req, res) => {
 			res.status('404');
 		});
 });
-
 // GET SHOPPING DATA
 app.get('/shopping/items/:item_id', (req, res) => {
 	let item_id = req.params.item_id;
