@@ -11,7 +11,8 @@ const app = express();
 const port = 3000;
 const imagesIP = '3.101.55.156:3006';
 const shoppingIP = '13.52.16.25:3004';
-const reviewsIP = '54.176.185.40:3002';
+//const reviewsIP = '54.176.185.40:3002';
+const reviewsIP = '50.18.230.50:3002';
 const sellerIP = '18.221.203.49:3005';
 
 
