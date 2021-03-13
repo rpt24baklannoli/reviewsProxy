@@ -5,12 +5,12 @@ const axios = require('axios');
 const cors = require('cors');
 const NodeCache = require( "node-cache" );
 const myCache = new NodeCache({ stdTTL: 3600 });
-//import ReactDOMServer from "react-dom/server";
 
 const app = express();
 const port = 3000;
 const imagesIP = '3.101.55.156:3006';
 const shoppingIP = '13.52.16.25:3004';
+// service before adding Nginx
 //const reviewsIP = '54.176.185.40:3002';
 const reviewsIP = '50.18.230.50:3002';
 const sellerIP = '18.221.203.49:3005';
@@ -20,25 +20,6 @@ app.use(compression());
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
-
-/*
-function handleRender(req, res) {
-	const reactHtml = ReactDOMServer.renderToString(<Main />);
-	const htmlTemplate = `<!DOCTYPE html>
-<html>
-	<head>
-			<title>Universal React server bundle</title>
-	</head>
-	<body>
-			<div id="app">${reactHtml}</div>
-			<script src="public/client.bundle.js"></script>
-	</body>
-</html>`;
-	res.send(htmlTemplate);
-}
-app.use('/items/:itemId', handleRender);
-*/
-
 
 app.get('/serviceBundles', (req, res) => {
 	let images = axios.get(`http://${imagesIP}/items/1/bundle.js`);
@@ -61,18 +42,6 @@ app.get('/serviceBundles', (req, res) => {
 });
 
 // GET IMAGES DATA
-// app.get('/item/:item_id/images', (req, res) => {
-// 	let item_id = req.params.item_id;
-// 	axios
-// 		.get(`http://${imagesIP}/item/${item_id}/images`)
-// 		.then((response) => {
-// 			res.status(200).send(response.data);
-// 		})
-// 		.catch((err) => {
-// 			console.log(err);
-// 			res.status('404');
-// 		});
-// });
 app.get('/items/:item_id/images', (req, res) => {
 	let item_id = req.params.item_id;
 	axios
